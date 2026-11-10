@@ -1,0 +1,7 @@
+---
+deployment:
+  tasks:
+    # Salin hanya file website (bukan file sumber desain) ke public_html
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/mkdir -p $DEPLOYPATH
+    - /bin/cp -R index.html assets .htaccess $DEPLOYPATH

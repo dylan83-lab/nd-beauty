@@ -1,0 +1,22 @@
+# ND Japanese Head Spa — aplikasi (Apache / cPanel)
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Lindungi folder internal
+  RewriteRule ^(src|sql|storage|tools|tests)(/|$) - [F,L]
+  RewriteRule ^config\.local\.php$ - [F,L]
+  # Semua yang bukan file/folder nyata -> index.php
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ index.php [L]
+</IfModule>
+
+<FilesMatch "\.(sqlite|log|sql|md)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+</IfModule>

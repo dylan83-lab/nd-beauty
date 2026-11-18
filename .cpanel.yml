@@ -1,7 +1,9 @@
 ---
 deployment:
   tasks:
-    # Salin hanya file website (bukan file sumber desain) ke public_html
+    # Salin hanya berkas website + aplikasi (bukan berkas desain sumber) ke public_html.
+    # app/config.local.php (password database) tidak ada di Git sehingga tidak tertimpa.
     - export DEPLOYPATH=$HOME/public_html/
     - /bin/mkdir -p $DEPLOYPATH
-    - /bin/cp -R index.html assets .htaccess $DEPLOYPATH
+    - /bin/cp -R index.html assets .htaccess app $DEPLOYPATH
+    - /bin/mkdir -p $DEPLOYPATH/app/storage

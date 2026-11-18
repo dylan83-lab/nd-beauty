@@ -1,0 +1,5 @@
+app/config.local.php
+app/storage/*
+!app/storage/.gitkeep
+*.log
+.claude/

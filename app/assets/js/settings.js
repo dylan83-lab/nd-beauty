@@ -48,7 +48,10 @@ async function lokasi(p) {
   const sync = (la, ln) => { $('#lat').value = (+la).toFixed(7); $('#lng').value = (+ln).toFixed(7); if (mk) { mk.setLatLng([la, ln]); circ.setLatLng([la, ln]); } $('#ver').checked = false; };
   try {
     await loadLeaflet();
-    map = L.map('map').setView([lat0, lng0], 18); L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap' }).addTo(map);
+    map = L.map('map').setView([lat0, lng0], 18);
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '© OpenStreetMap', referrerPolicy: 'strict-origin-when-cross-origin' }).addTo(map);
+    const sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Tiles © Esri' });
+    L.control.layers({ 'Peta': osm, 'Satelit': sat }).addTo(map);
     mk = L.marker([lat0, lng0], { draggable: true }).addTo(map); circ = L.circle([lat0, lng0], { radius: +$('#rad').value || 100, color: '#7a1230', fillOpacity: .12 }).addTo(map);
     mk.on('dragend', () => { const c = mk.getLatLng(); sync(c.lat, c.lng); }); map.on('click', e => sync(e.latlng.lat, e.latlng.lng));
     $('#rad').oninput = () => circ.setRadius(+$('#rad').value || 100);
